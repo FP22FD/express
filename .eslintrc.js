@@ -1,17 +1,17 @@
-import js from '@eslint/js'
+import js from "@eslint/js";
 
 export default [
-    {
-        files: ['**/*.ts'],
-        languageOptions: {
-            parser: typescript - eslint.parser,
-        },
-        plugins: {
-            perfectionist: eslintPluginPerfectionist,
-        },
-        rules: {
-            'perfectionist/sort-imports': 'error',
-        },
+  {
+    files: ["**/*.ts"],
+    languageOptions: {
+      parser: typescript - eslint.parser,
     },
-    js.configs.recommended,
-]
+    plugins: {
+      perfectionist: eslintPluginPerfectionist,
+    },
+    rules: {
+      "perfectionist/sort-imports": "error",
+    },
+  },
+  js.configs.recommended,
+];
