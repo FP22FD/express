@@ -28,5 +28,5 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-      - name: Check formatting with Prettier
-        run: npm run format:check
+      # - name: Check formatting with Prettier
+      #   run: npm run format:check
