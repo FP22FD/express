@@ -9,6 +9,7 @@
   to = "/.netlify/functions/api/:splat"
 
 [build]
-  command = "npm run build"
-  functions = "netlify/functions"
-  publish = "dist" 
+  command = "echo 'Building Functions'"
+#  command = "npm run build"
+#  functions = "netlify/functions"
+#  publish = "dist" 
