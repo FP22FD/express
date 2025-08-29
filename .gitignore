@@ -16,3 +16,6 @@ dist
 # Test coverage
 coverage
 coverage/
+
+# Logs
+exercises.sql
