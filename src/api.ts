@@ -109,7 +109,7 @@ router.get(
     const pool = await sql.connect(sqlConfig);
     const result = await pool.request().query("SELECT * FROM Languages");
     res.json(result.recordset);
-  }),
+  })
 );
 
 //---------------------------------------------------------------------------
@@ -128,7 +128,7 @@ router.get(
     }
 
     res.json(result.recordset[0]);
-  }),
+  })
 );
 
 //---------------------------------------------------------------------------
@@ -147,7 +147,7 @@ router.post(
     await pool.request().input("languageCode", sql.VarChar(2), languageCode).query("INSERT INTO Languages (LanguageCode) VALUES (@languageCode)");
 
     res.status(201).send("Language created successfully");
-  }),
+  })
 );
 
 //---------------------------------------------------------------------------
@@ -181,7 +181,7 @@ router.put(
     }
 
     res.send("Language updated successfully");
-  }),
+  })
 );
 
 //---------------------------------------------------------------------------
@@ -200,7 +200,7 @@ router.delete(
     }
 
     res.send("Language deleted successfully");
-  }),
+  })
 );
 
 //---------------------------------------------------------------------------
@@ -219,7 +219,7 @@ router.get(
     const pool = await sql.connect(sqlConfig);
     const result = await pool.request().query("SELECT * FROM Authors");
     res.json(result.recordset);
-  }),
+  })
 );
 
 //---------------------------------------------------------------------------
@@ -232,7 +232,7 @@ router.get(
     const pool = await sql.connect(sqlConfig);
     const result = await pool.request().input("id", sql.Int, id).query("SELECT * FROM Authors WHERE AuthorId = @id");
     res.json(result.recordset[0]);
-  }),
+  })
 );
 
 //---------------------------------------------------------------------------
@@ -293,11 +293,10 @@ router.post(
       id: insertedId,
       message: "Author created successfully",
     });
-  }),
+  })
 );
 
 //---------------------------------------------------------------------------
-// TODO: translate comments to English
 
 interface BookEditRequest {
   middlename?: string;
@@ -346,7 +345,7 @@ router.put(
       id: insertedId,
       message: "Author updated successfully",
     });
-  }),
+  })
 );
 
 //---------------------------------------------------------------------------
@@ -372,7 +371,7 @@ router.delete(
     }
 
     res.json({ id });
-  }),
+  })
 );
 
 //--------------------------in progress-------------------------------------------
@@ -393,7 +392,7 @@ router.get(
     const pool = await sql.connect(sqlConfig);
     const result = await pool.request().query("SELECT * FROM Books");
     res.json(result.recordset);
-  }),
+  })
 );
 
 router.get(
@@ -404,7 +403,7 @@ router.get(
     const pool = await sql.connect(sqlConfig);
     const result = await pool.request().input("id", sql.Int, id).query("SELECT * FROM Books WHERE BookId =@id");
     res.json(result.recordset[0]);
-  }),
+  })
 );
 
 //---------------------------------------------------------------------------
@@ -456,7 +455,7 @@ router.post(
       id: insertedId,
       message: "Book created successfully",
     });
-  }),
+  })
 );
 
 //---------------------------------------------------------------------------
@@ -516,7 +515,7 @@ router.put(
       id: insertedId,
       message: "Book updated successfully",
     });
-  }),
+  })
 );
 
 //---------------------------------------------------------------------------
@@ -547,7 +546,7 @@ router.delete(
     res.status(201).json({
       message: "Book deleted successfully",
     });
-  }),
+  })
 );
 
 //---------------------------------------------------------------------------
@@ -569,7 +568,7 @@ router.get(
     const pool = await sql.connect(sqlConfig);
     const result = await pool.request().input("bookId", sql.Int, bookId).query("SELECT * FROM BooksAuthors WHERE BookId = @bookId");
     res.json(result.recordset);
-  }),
+  })
 );
 
 router.get(
@@ -581,7 +580,7 @@ router.get(
     const result = await pool.request().input("authorId", sql.Int, authorId).query("SELECT * FROM BooksAuthors WHERE AuthorId = @authorId");
 
     res.json(result.recordset);
-  }),
+  })
 );
 
 //---------------------------------------------------------------------------
@@ -623,7 +622,7 @@ router.post(
       .query("INSERT INTO BooksAuthors (BookId, AuthorId) VALUES (@bookId, @authorId)");
 
     res.status(201).json({ message: "Author added to book successfully" });
-  }),
+  })
 );
 //---------------------------------------------------------------------------
 
@@ -655,7 +654,7 @@ router.delete(
       .query("DELETE FROM BooksAuthors WHERE BookId = @bookId AND AuthorId = @authorId");
 
     res.json({ message: "Author removed from book successfully" });
-  }),
+  })
 );
 
 //---------------------------------------------------------------------------
@@ -676,7 +675,7 @@ router.get(
     const pool = await sql.connect(sqlConfig);
     const result = await pool.request().query("SELECT * FROM Users");
     res.json(result.recordset);
-  }),
+  })
 );
 
 //---------------------------------------------------------------------------
@@ -689,7 +688,7 @@ router.get(
     const pool = await sql.connect(sqlConfig);
     const result = await pool.request().input("id", sql.Int, id).query("SELECT * FROM Users WHERE UserId = @id");
     res.json(result.recordset[0] ?? {}); // Returns an empty object if user not found
-  }),
+  })
 );
 
 //---------------------------------------------------------------------------
@@ -719,7 +718,7 @@ router.post(
       message: "User created successfully",
       user: result.recordset[0] as { UserId: number; Username: string },
     });
-  }),
+  })
 );
 
 //-------------------------------------------------------------------------
@@ -743,7 +742,7 @@ router.delete(
       return;
     }
     res.json({ message: "User deleted successfully" });
-  }),
+  })
 );
 
 //-------------------------------------------------------------------------
