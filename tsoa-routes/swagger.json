@@ -1,0 +1,864 @@
+{
+  "openapi": "3.0.0",
+  "components": {
+    "examples": {},
+    "headers": {},
+    "parameters": {},
+    "requestBodies": {},
+    "responses": {},
+    "schemas": {
+      "User": {
+        "properties": {
+          "Id": {
+            "type": "number",
+            "format": "double"
+          },
+          "Name": {
+            "type": "string"
+          }
+        },
+        "required": ["Id", "Name"],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Partial_User_": {
+        "properties": {
+          "Id": {
+            "type": "number",
+            "format": "double"
+          },
+          "Name": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "description": "Make all properties in T optional"
+      },
+      "Language": {
+        "properties": {
+          "Id": {
+            "type": "number",
+            "format": "double"
+          },
+          "Name": {
+            "type": "string"
+          }
+        },
+        "required": ["Id", "Name"],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Partial_Language_": {
+        "properties": {
+          "Id": {
+            "type": "number",
+            "format": "double"
+          },
+          "Name": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "description": "Make all properties in T optional"
+      },
+      "Book": {
+        "properties": {
+          "BookId": {
+            "type": "number",
+            "format": "double"
+          },
+          "CreatedAtUtc": {
+            "type": "string"
+          },
+          "CreatedBy": {
+            "type": "number",
+            "format": "double"
+          },
+          "Description": {
+            "type": "string"
+          },
+          "DownloadURL": {
+            "type": "string"
+          },
+          "ImageURL": {
+            "type": "string"
+          },
+          "ISBN": {
+            "type": "number",
+            "format": "double"
+          },
+          "LanguageID": {
+            "type": "number",
+            "format": "double"
+          },
+          "ModifiedAtUtc": {
+            "type": "string"
+          },
+          "ModifiedBy": {
+            "type": "number",
+            "format": "double"
+          },
+          "Title": {
+            "type": "string"
+          },
+          "Year": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": [
+          "BookId",
+          "CreatedAtUtc",
+          "CreatedBy",
+          "Description",
+          "DownloadURL",
+          "ImageURL",
+          "ISBN",
+          "LanguageID",
+          "ModifiedAtUtc",
+          "ModifiedBy",
+          "Title",
+          "Year"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Partial_Book_": {
+        "properties": {
+          "BookId": {
+            "type": "number",
+            "format": "double"
+          },
+          "CreatedAtUtc": {
+            "type": "string"
+          },
+          "CreatedBy": {
+            "type": "number",
+            "format": "double"
+          },
+          "Description": {
+            "type": "string"
+          },
+          "DownloadURL": {
+            "type": "string"
+          },
+          "ImageURL": {
+            "type": "string"
+          },
+          "ISBN": {
+            "type": "number",
+            "format": "double"
+          },
+          "LanguageID": {
+            "type": "number",
+            "format": "double"
+          },
+          "ModifiedAtUtc": {
+            "type": "string"
+          },
+          "ModifiedBy": {
+            "type": "number",
+            "format": "double"
+          },
+          "Title": {
+            "type": "string"
+          },
+          "Year": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "type": "object",
+        "description": "Make all properties in T optional"
+      },
+      "Author": {
+        "properties": {
+          "AuthorId": {
+            "type": "number",
+            "format": "double"
+          },
+          "Middlename": {
+            "type": "string"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "Surname": {
+            "type": "string"
+          }
+        },
+        "required": ["AuthorId", "Middlename", "Name", "Surname"],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Partial_Author_": {
+        "properties": {
+          "AuthorId": {
+            "type": "number",
+            "format": "double"
+          },
+          "Middlename": {
+            "type": "string"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "Surname": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "description": "Make all properties in T optional"
+      }
+    },
+    "securitySchemes": {}
+  },
+  "info": {
+    "title": "express",
+    "version": "1.0.0",
+    "license": {
+      "name": "ISC"
+    },
+    "contact": {
+      "name": "Fernanda Gomes"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "operationId": "CreateUser",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "description": "POST /users",
+        "tags": ["Users"],
+        "security": [],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "GetUsers",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  },
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "GET /users",
+        "tags": ["Users"],
+        "security": [],
+        "parameters": []
+      }
+    },
+    "/users/{id}": {
+      "delete": {
+        "operationId": "DeleteUser",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["message"],
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "description": "DELETE /users/{id}",
+        "tags": ["Users"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
+      },
+      "get": {
+        "operationId": "GetUser",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "description": "GET /users/{id}",
+        "tags": ["Users"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
+      },
+      "put": {
+        "operationId": "UpdateUser",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "description": "PUT /users/{id}",
+        "tags": ["Users"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partial_User_"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/languages": {
+      "post": {
+        "operationId": "CreateLanguage",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Language"
+                }
+              }
+            }
+          }
+        },
+        "description": "POST /languages",
+        "tags": ["Languages"],
+        "security": [],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Language"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "GetLanguages",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Language"
+                  },
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "GET /languages",
+        "tags": ["Languages"],
+        "security": [],
+        "parameters": []
+      }
+    },
+    "/languages/{id}": {
+      "delete": {
+        "operationId": "DeleteLanguage",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["message"],
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "description": "DELETE /languages/{id}",
+        "tags": ["Languages"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
+      },
+      "get": {
+        "operationId": "GetLanguage",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Language"
+                }
+              }
+            }
+          }
+        },
+        "description": "GET /languages/{id}",
+        "tags": ["Languages"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
+      },
+      "put": {
+        "operationId": "UpdateLanguage",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Language"
+                }
+              }
+            }
+          }
+        },
+        "description": "PUT /languages/{id}",
+        "tags": ["Languages"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partial_Language_"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/books": {
+      "post": {
+        "operationId": "CreateBook",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            }
+          }
+        },
+        "description": "POST /books",
+        "tags": ["Books"],
+        "security": [],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Book"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "GetBooks",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Book"
+                  },
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Books"],
+        "security": [],
+        "parameters": []
+      }
+    },
+    "/books/{id}": {
+      "delete": {
+        "operationId": "DeleteBook",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["message"],
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "description": "DELETE /books/{id}",
+        "tags": ["Books"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
+      },
+      "get": {
+        "operationId": "GetBook",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            }
+          }
+        },
+        "description": "GET /books/{id}",
+        "tags": ["Books"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
+      },
+      "put": {
+        "operationId": "UpdateBook",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            }
+          }
+        },
+        "description": "PUT /books/{id}",
+        "tags": ["Books"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partial_Book_"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authors": {
+      "post": {
+        "operationId": "CreateAuthor",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Author"
+                }
+              }
+            }
+          }
+        },
+        "description": "POST /authors",
+        "tags": ["Authors"],
+        "security": [],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Author"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "GetAuthors",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Author"
+                  },
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "GET /authors",
+        "tags": ["Authors"],
+        "security": [],
+        "parameters": []
+      }
+    },
+    "/authors/{id}": {
+      "delete": {
+        "operationId": "DeleteAuthor",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["message"],
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "description": "DELETE /authors/{id}",
+        "tags": ["Authors"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
+      },
+      "get": {
+        "operationId": "GetAuthor",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Author"
+                }
+              }
+            }
+          }
+        },
+        "description": "GET /authors/{id}",
+        "tags": ["Authors"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
+      },
+      "put": {
+        "operationId": "UpdateAuthor",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Author"
+                }
+              }
+            }
+          }
+        },
+        "description": "PUT /authors/{id}",
+        "tags": ["Authors"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partial_Author_"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/api"
+    }
+  ]
+}
