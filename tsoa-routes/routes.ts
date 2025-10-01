@@ -3,110 +3,161 @@
 import type { TsoaRoute } from "@tsoa/runtime";
 import { fetchMiddlewares, ExpressTemplateService } from "@tsoa/runtime";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { UsersController } from "./../src/controllers/usersController.js";
+import { UsersController } from "./../src/controllers/usersController";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { LanguagesController } from "./../src/controllers/languagesController.js";
+import { LanguagesController } from "./../src/controllers/languagesController";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { BooksController } from "./../src/controllers/booksController.js";
+import { BooksController } from "./../src/controllers/booksController";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { AuthorsController } from "./../src/controllers/authorsController.js";
+import { AuthorsController } from "./../src/controllers/authorsController";
 import type { Request as ExRequest, Response as ExResponse, RequestHandler, Router } from "express";
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
-  User: {
+  UserRequest: {
     dataType: "refObject",
     properties: {
-      Id: { dataType: "double", required: true },
-      Name: { dataType: "string", required: true },
+      userId: { dataType: "double", required: true },
+      username: { dataType: "string", required: true },
     },
     additionalProperties: false,
   },
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  Partial_User_: {
-    dataType: "refAlias",
-    type: { dataType: "nestedObjectLiteral", nestedProperties: { Id: { dataType: "double" }, Name: { dataType: "string" } }, validators: {} },
-  },
-  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  Language: {
+  UserCreateRequest: {
     dataType: "refObject",
     properties: {
-      Id: { dataType: "double", required: true },
-      Name: { dataType: "string", required: true },
+      username: { dataType: "string", required: true },
     },
     additionalProperties: false,
   },
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  Partial_Language_: {
-    dataType: "refAlias",
-    type: { dataType: "nestedObjectLiteral", nestedProperties: { Id: { dataType: "double" }, Name: { dataType: "string" } }, validators: {} },
-  },
-  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  Book: {
+  UserUpdateRequest: {
     dataType: "refObject",
     properties: {
-      BookId: { dataType: "double", required: true },
-      CreatedAtUtc: { dataType: "string", required: true },
-      CreatedBy: { dataType: "double", required: true },
-      Description: { dataType: "string", required: true },
-      DownloadURL: { dataType: "string", required: true },
-      ImageURL: { dataType: "string", required: true },
-      ISBN: { dataType: "double", required: true },
-      LanguageID: { dataType: "double", required: true },
-      ModifiedAtUtc: { dataType: "string", required: true },
-      ModifiedBy: { dataType: "double", required: true },
-      Title: { dataType: "string", required: true },
-      Year: { dataType: "double", required: true },
+      username: { dataType: "string", required: true },
     },
     additionalProperties: false,
   },
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  Partial_Book_: {
-    dataType: "refAlias",
-    type: {
-      dataType: "nestedObjectLiteral",
-      nestedProperties: {
-        BookId: { dataType: "double" },
-        CreatedAtUtc: { dataType: "string" },
-        CreatedBy: { dataType: "double" },
-        Description: { dataType: "string" },
-        DownloadURL: { dataType: "string" },
-        ImageURL: { dataType: "string" },
-        ISBN: { dataType: "double" },
-        LanguageID: { dataType: "double" },
-        ModifiedAtUtc: { dataType: "string" },
-        ModifiedBy: { dataType: "double" },
-        Title: { dataType: "string" },
-        Year: { dataType: "double" },
-      },
-      validators: {},
+  CreateLanguageRequest: {
+    dataType: "refObject",
+    properties: {
+      languageCode: { dataType: "string", required: true },
     },
+    additionalProperties: false,
   },
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  Author: {
+  LanguageRequest: {
+    dataType: "refObject",
+    properties: {
+      languageCode: { dataType: "string", required: true },
+      languageId: { dataType: "double", required: true },
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  UpdateLanguageRequest: {
+    dataType: "refObject",
+    properties: {
+      languageCode: { dataType: "string", required: true },
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  BookAuthorCreateRequest: {
+    dataType: "refObject",
+    properties: {
+      authorId: { dataType: "double", required: true },
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  BookCreateRequest: {
+    dataType: "refObject",
+    properties: {
+      description: { dataType: "string", required: true },
+      downloadUrl: { dataType: "string" },
+      imageUrl: { dataType: "string" },
+      isbn: { dataType: "string", required: true },
+      languageId: { dataType: "double", required: true },
+      title: { dataType: "string", required: true },
+      year: { dataType: "double", required: true },
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  BookAuthor: {
     dataType: "refObject",
     properties: {
       AuthorId: { dataType: "double", required: true },
-      Middlename: { dataType: "string", required: true },
-      Name: { dataType: "string", required: true },
-      Surname: { dataType: "string", required: true },
+      BookId: { dataType: "double", required: true },
     },
     additionalProperties: false,
   },
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  Partial_Author_: {
-    dataType: "refAlias",
-    type: {
-      dataType: "nestedObjectLiteral",
-      nestedProperties: {
-        AuthorId: { dataType: "double" },
-        Middlename: { dataType: "string" },
-        Name: { dataType: "string" },
-        Surname: { dataType: "string" },
-      },
-      validators: {},
+  BookRequest: {
+    dataType: "refObject",
+    properties: {
+      bookId: { dataType: "double", required: true },
+      createdAtUtc: { dataType: "string", required: true },
+      createdBy: { dataType: "double", required: true },
+      description: { dataType: "string", required: true },
+      downloadUrl: { dataType: "string" },
+      imageUrl: { dataType: "string" },
+      isbn: { dataType: "string", required: true },
+      languageId: { dataType: "double", required: true },
+      modifiedAtUtc: { dataType: "string", required: true },
+      modifiedBy: { dataType: "double", required: true },
+      title: { dataType: "string", required: true },
+      year: { dataType: "double", required: true },
     },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  BookUpdateRequest: {
+    dataType: "refObject",
+    properties: {
+      description: { dataType: "string", required: true },
+      downloadUrl: { dataType: "string" },
+      imageUrl: { dataType: "string" },
+      isbn: { dataType: "string", required: true },
+      languageId: { dataType: "double", required: true },
+      title: { dataType: "string", required: true },
+      year: { dataType: "double", required: true },
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  AuthorCreateRequest: {
+    dataType: "refObject",
+    properties: {
+      middlename: { dataType: "string" },
+      name: { dataType: "string", required: true },
+      surname: { dataType: "string" },
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  AuthorRequest: {
+    dataType: "refObject",
+    properties: {
+      AuthorId: { dataType: "double", required: true },
+      Middlename: { dataType: "string" },
+      Name: { dataType: "string", required: true },
+      Surname: { dataType: "string" },
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  AuthorUpdateRequest: {
+    dataType: "refObject",
+    properties: {
+      middlename: { dataType: "string" },
+      name: { dataType: "string", required: true },
+      surname: { dataType: "string" },
+    },
+    additionalProperties: false,
   },
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
@@ -121,10 +172,10 @@ export function RegisterRoutes(app: Router) {
   // ###########################################################################################################
 
   const argsUsersController_createUser: Record<string, TsoaRoute.ParameterSchema> = {
-    body: { in: "body", name: "body", required: true, ref: "User" },
+    body: { in: "body", name: "body", required: true, ref: "UserCreateRequest" },
   };
   app.post(
-    "/users",
+    "/api/users",
     ...fetchMiddlewares<RequestHandler>(UsersController),
     ...fetchMiddlewares<RequestHandler>(UsersController.prototype.createUser),
 
@@ -155,7 +206,7 @@ export function RegisterRoutes(app: Router) {
     id: { in: "path", name: "id", required: true, dataType: "double" },
   };
   app.delete(
-    "/users/:id",
+    "/api/users/:id",
     ...fetchMiddlewares<RequestHandler>(UsersController),
     ...fetchMiddlewares<RequestHandler>(UsersController.prototype.deleteUser),
 
@@ -186,7 +237,7 @@ export function RegisterRoutes(app: Router) {
     id: { in: "path", name: "id", required: true, dataType: "double" },
   };
   app.get(
-    "/users/:id",
+    "/api/users/:id",
     ...fetchMiddlewares<RequestHandler>(UsersController),
     ...fetchMiddlewares<RequestHandler>(UsersController.prototype.getUser),
 
@@ -215,7 +266,7 @@ export function RegisterRoutes(app: Router) {
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   const argsUsersController_getUsers: Record<string, TsoaRoute.ParameterSchema> = {};
   app.get(
-    "/users",
+    "/api/users",
     ...fetchMiddlewares<RequestHandler>(UsersController),
     ...fetchMiddlewares<RequestHandler>(UsersController.prototype.getUsers),
 
@@ -244,10 +295,10 @@ export function RegisterRoutes(app: Router) {
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   const argsUsersController_updateUser: Record<string, TsoaRoute.ParameterSchema> = {
     id: { in: "path", name: "id", required: true, dataType: "double" },
-    body: { in: "body", name: "body", required: true, ref: "Partial_User_" },
+    body: { in: "body", name: "body", required: true, ref: "UserUpdateRequest" },
   };
   app.put(
-    "/users/:id",
+    "/api/users/:id",
     ...fetchMiddlewares<RequestHandler>(UsersController),
     ...fetchMiddlewares<RequestHandler>(UsersController.prototype.updateUser),
 
@@ -275,10 +326,10 @@ export function RegisterRoutes(app: Router) {
   );
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   const argsLanguagesController_createLanguage: Record<string, TsoaRoute.ParameterSchema> = {
-    body: { in: "body", name: "body", required: true, ref: "Language" },
+    body: { in: "body", name: "body", required: true, ref: "CreateLanguageRequest" },
   };
   app.post(
-    "/languages",
+    "/api/languages",
     ...fetchMiddlewares<RequestHandler>(LanguagesController),
     ...fetchMiddlewares<RequestHandler>(LanguagesController.prototype.createLanguage),
 
@@ -309,7 +360,7 @@ export function RegisterRoutes(app: Router) {
     id: { in: "path", name: "id", required: true, dataType: "double" },
   };
   app.delete(
-    "/languages/:id",
+    "/api/languages/:id",
     ...fetchMiddlewares<RequestHandler>(LanguagesController),
     ...fetchMiddlewares<RequestHandler>(LanguagesController.prototype.deleteLanguage),
 
@@ -340,7 +391,7 @@ export function RegisterRoutes(app: Router) {
     id: { in: "path", name: "id", required: true, dataType: "double" },
   };
   app.get(
-    "/languages/:id",
+    "/api/languages/:id",
     ...fetchMiddlewares<RequestHandler>(LanguagesController),
     ...fetchMiddlewares<RequestHandler>(LanguagesController.prototype.getLanguage),
 
@@ -369,7 +420,7 @@ export function RegisterRoutes(app: Router) {
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   const argsLanguagesController_getLanguages: Record<string, TsoaRoute.ParameterSchema> = {};
   app.get(
-    "/languages",
+    "/api/languages",
     ...fetchMiddlewares<RequestHandler>(LanguagesController),
     ...fetchMiddlewares<RequestHandler>(LanguagesController.prototype.getLanguages),
 
@@ -398,10 +449,10 @@ export function RegisterRoutes(app: Router) {
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   const argsLanguagesController_updateLanguage: Record<string, TsoaRoute.ParameterSchema> = {
     id: { in: "path", name: "id", required: true, dataType: "double" },
-    body: { in: "body", name: "body", required: true, ref: "Partial_Language_" },
+    body: { in: "body", name: "body", required: true, ref: "UpdateLanguageRequest" },
   };
   app.put(
-    "/languages/:id",
+    "/api/languages/:id",
     ...fetchMiddlewares<RequestHandler>(LanguagesController),
     ...fetchMiddlewares<RequestHandler>(LanguagesController.prototype.updateLanguage),
 
@@ -428,11 +479,43 @@ export function RegisterRoutes(app: Router) {
     }
   );
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  const argsBooksController_createBook: Record<string, TsoaRoute.ParameterSchema> = {
-    body: { in: "body", name: "body", required: true, ref: "Book" },
+  const argsBooksController_addAuthorToBook: Record<string, TsoaRoute.ParameterSchema> = {
+    bookId: { in: "path", name: "bookId", required: true, dataType: "double" },
+    body: { in: "body", name: "body", required: true, ref: "BookAuthorCreateRequest" },
   };
   app.post(
-    "/books",
+    "/api/books/:bookId/authors",
+    ...fetchMiddlewares<RequestHandler>(BooksController),
+    ...fetchMiddlewares<RequestHandler>(BooksController.prototype.addAuthorToBook),
+
+    async function BooksController_addAuthorToBook(request: ExRequest, response: ExResponse, next: any) {
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = templateService.getValidatedArgs({ args: argsBooksController_addAuthorToBook, request, response });
+
+        const controller = new BooksController();
+
+        await templateService.apiHandler({
+          methodName: "addAuthorToBook",
+          controller,
+          response,
+          next,
+          validatedArgs,
+          successStatus: 201,
+        });
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  const argsBooksController_createBook: Record<string, TsoaRoute.ParameterSchema> = {
+    body: { in: "body", name: "body", required: true, ref: "BookCreateRequest" },
+  };
+  app.post(
+    "/api/books",
     ...fetchMiddlewares<RequestHandler>(BooksController),
     ...fetchMiddlewares<RequestHandler>(BooksController.prototype.createBook),
 
@@ -463,7 +546,7 @@ export function RegisterRoutes(app: Router) {
     id: { in: "path", name: "id", required: true, dataType: "double" },
   };
   app.delete(
-    "/books/:id",
+    "/api/books/:id",
     ...fetchMiddlewares<RequestHandler>(BooksController),
     ...fetchMiddlewares<RequestHandler>(BooksController.prototype.deleteBook),
 
@@ -490,11 +573,42 @@ export function RegisterRoutes(app: Router) {
     }
   );
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  const argsBooksController_getAuthorsByBook: Record<string, TsoaRoute.ParameterSchema> = {
+    bookId: { in: "path", name: "bookId", required: true, dataType: "double" },
+  };
+  app.get(
+    "/api/books/:bookId/authors",
+    ...fetchMiddlewares<RequestHandler>(BooksController),
+    ...fetchMiddlewares<RequestHandler>(BooksController.prototype.getAuthorsByBook),
+
+    async function BooksController_getAuthorsByBook(request: ExRequest, response: ExResponse, next: any) {
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = templateService.getValidatedArgs({ args: argsBooksController_getAuthorsByBook, request, response });
+
+        const controller = new BooksController();
+
+        await templateService.apiHandler({
+          methodName: "getAuthorsByBook",
+          controller,
+          response,
+          next,
+          validatedArgs,
+          successStatus: undefined,
+        });
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   const argsBooksController_getBook: Record<string, TsoaRoute.ParameterSchema> = {
     id: { in: "path", name: "id", required: true, dataType: "double" },
   };
   app.get(
-    "/books/:id",
+    "/api/books/:id",
     ...fetchMiddlewares<RequestHandler>(BooksController),
     ...fetchMiddlewares<RequestHandler>(BooksController.prototype.getBook),
 
@@ -523,7 +637,7 @@ export function RegisterRoutes(app: Router) {
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   const argsBooksController_getBooks: Record<string, TsoaRoute.ParameterSchema> = {};
   app.get(
-    "/books",
+    "/api/books",
     ...fetchMiddlewares<RequestHandler>(BooksController),
     ...fetchMiddlewares<RequestHandler>(BooksController.prototype.getBooks),
 
@@ -550,12 +664,44 @@ export function RegisterRoutes(app: Router) {
     }
   );
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  const argsBooksController_removeAuthorFromBook: Record<string, TsoaRoute.ParameterSchema> = {
+    bookId: { in: "path", name: "bookId", required: true, dataType: "double" },
+    authorId: { in: "path", name: "authorId", required: true, dataType: "double" },
+  };
+  app.delete(
+    "/api/books/:bookId/authors/:authorId",
+    ...fetchMiddlewares<RequestHandler>(BooksController),
+    ...fetchMiddlewares<RequestHandler>(BooksController.prototype.removeAuthorFromBook),
+
+    async function BooksController_removeAuthorFromBook(request: ExRequest, response: ExResponse, next: any) {
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = templateService.getValidatedArgs({ args: argsBooksController_removeAuthorFromBook, request, response });
+
+        const controller = new BooksController();
+
+        await templateService.apiHandler({
+          methodName: "removeAuthorFromBook",
+          controller,
+          response,
+          next,
+          validatedArgs,
+          successStatus: undefined,
+        });
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   const argsBooksController_updateBook: Record<string, TsoaRoute.ParameterSchema> = {
     id: { in: "path", name: "id", required: true, dataType: "double" },
-    body: { in: "body", name: "body", required: true, ref: "Partial_Book_" },
+    body: { in: "body", name: "body", required: true, ref: "BookUpdateRequest" },
   };
   app.put(
-    "/books/:id",
+    "/api/books/:id",
     ...fetchMiddlewares<RequestHandler>(BooksController),
     ...fetchMiddlewares<RequestHandler>(BooksController.prototype.updateBook),
 
@@ -583,10 +729,10 @@ export function RegisterRoutes(app: Router) {
   );
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   const argsAuthorsController_createAuthor: Record<string, TsoaRoute.ParameterSchema> = {
-    body: { in: "body", name: "body", required: true, ref: "Author" },
+    body: { in: "body", name: "body", required: true, ref: "AuthorCreateRequest" },
   };
   app.post(
-    "/authors",
+    "/api/authors",
     ...fetchMiddlewares<RequestHandler>(AuthorsController),
     ...fetchMiddlewares<RequestHandler>(AuthorsController.prototype.createAuthor),
 
@@ -617,7 +763,7 @@ export function RegisterRoutes(app: Router) {
     id: { in: "path", name: "id", required: true, dataType: "double" },
   };
   app.delete(
-    "/authors/:id",
+    "/api/authors/:id",
     ...fetchMiddlewares<RequestHandler>(AuthorsController),
     ...fetchMiddlewares<RequestHandler>(AuthorsController.prototype.deleteAuthor),
 
@@ -648,7 +794,7 @@ export function RegisterRoutes(app: Router) {
     id: { in: "path", name: "id", required: true, dataType: "double" },
   };
   app.get(
-    "/authors/:id",
+    "/api/authors/:id",
     ...fetchMiddlewares<RequestHandler>(AuthorsController),
     ...fetchMiddlewares<RequestHandler>(AuthorsController.prototype.getAuthor),
 
@@ -677,7 +823,7 @@ export function RegisterRoutes(app: Router) {
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   const argsAuthorsController_getAuthors: Record<string, TsoaRoute.ParameterSchema> = {};
   app.get(
-    "/authors",
+    "/api/authors",
     ...fetchMiddlewares<RequestHandler>(AuthorsController),
     ...fetchMiddlewares<RequestHandler>(AuthorsController.prototype.getAuthors),
 
@@ -704,12 +850,43 @@ export function RegisterRoutes(app: Router) {
     }
   );
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  const argsAuthorsController_getBooksByAuthor: Record<string, TsoaRoute.ParameterSchema> = {
+    authorId: { in: "path", name: "authorId", required: true, dataType: "double" },
+  };
+  app.get(
+    "/api/authors/:authorId/books",
+    ...fetchMiddlewares<RequestHandler>(AuthorsController),
+    ...fetchMiddlewares<RequestHandler>(AuthorsController.prototype.getBooksByAuthor),
+
+    async function AuthorsController_getBooksByAuthor(request: ExRequest, response: ExResponse, next: any) {
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = templateService.getValidatedArgs({ args: argsAuthorsController_getBooksByAuthor, request, response });
+
+        const controller = new AuthorsController();
+
+        await templateService.apiHandler({
+          methodName: "getBooksByAuthor",
+          controller,
+          response,
+          next,
+          validatedArgs,
+          successStatus: undefined,
+        });
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   const argsAuthorsController_updateAuthor: Record<string, TsoaRoute.ParameterSchema> = {
     id: { in: "path", name: "id", required: true, dataType: "double" },
-    body: { in: "body", name: "body", required: true, ref: "Partial_Author_" },
+    body: { in: "body", name: "body", required: true, ref: "AuthorUpdateRequest" },
   };
   app.put(
-    "/authors/:id",
+    "/api/authors/:id",
     ...fetchMiddlewares<RequestHandler>(AuthorsController),
     ...fetchMiddlewares<RequestHandler>(AuthorsController.prototype.updateAuthor),
 

@@ -7,171 +7,225 @@
     "requestBodies": {},
     "responses": {},
     "schemas": {
-      "User": {
+      "UserRequest": {
         "properties": {
-          "Id": {
+          "userId": {
             "type": "number",
             "format": "double"
           },
-          "Name": {
+          "username": {
             "type": "string"
           }
         },
-        "required": ["Id", "Name"],
+        "required": ["userId", "username"],
         "type": "object",
         "additionalProperties": false
       },
-      "Partial_User_": {
+      "UserCreateRequest": {
         "properties": {
-          "Id": {
-            "type": "number",
-            "format": "double"
-          },
-          "Name": {
+          "username": {
             "type": "string"
           }
         },
-        "type": "object",
-        "description": "Make all properties in T optional"
-      },
-      "Language": {
-        "properties": {
-          "Id": {
-            "type": "number",
-            "format": "double"
-          },
-          "Name": {
-            "type": "string"
-          }
-        },
-        "required": ["Id", "Name"],
+        "required": ["username"],
         "type": "object",
         "additionalProperties": false
       },
-      "Partial_Language_": {
+      "UserUpdateRequest": {
         "properties": {
-          "Id": {
-            "type": "number",
-            "format": "double"
-          },
-          "Name": {
+          "username": {
             "type": "string"
           }
         },
+        "required": ["username"],
         "type": "object",
-        "description": "Make all properties in T optional"
+        "additionalProperties": false
       },
-      "Book": {
+      "CreateLanguageRequest": {
         "properties": {
+          "languageCode": {
+            "type": "string"
+          }
+        },
+        "required": ["languageCode"],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "LanguageRequest": {
+        "properties": {
+          "languageCode": {
+            "type": "string"
+          },
+          "languageId": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": ["languageCode", "languageId"],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "UpdateLanguageRequest": {
+        "properties": {
+          "languageCode": {
+            "type": "string"
+          }
+        },
+        "required": ["languageCode"],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "BookAuthorCreateRequest": {
+        "properties": {
+          "authorId": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": ["authorId"],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "BookCreateRequest": {
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "downloadUrl": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "isbn": {
+            "type": "string"
+          },
+          "languageId": {
+            "type": "number",
+            "format": "double"
+          },
+          "title": {
+            "type": "string"
+          },
+          "year": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": ["description", "isbn", "languageId", "title", "year"],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "BookAuthor": {
+        "properties": {
+          "AuthorId": {
+            "type": "number",
+            "format": "double"
+          },
           "BookId": {
             "type": "number",
             "format": "double"
-          },
-          "CreatedAtUtc": {
-            "type": "string"
-          },
-          "CreatedBy": {
-            "type": "number",
-            "format": "double"
-          },
-          "Description": {
-            "type": "string"
-          },
-          "DownloadURL": {
-            "type": "string"
-          },
-          "ImageURL": {
-            "type": "string"
-          },
-          "ISBN": {
-            "type": "number",
-            "format": "double"
-          },
-          "LanguageID": {
-            "type": "number",
-            "format": "double"
-          },
-          "ModifiedAtUtc": {
-            "type": "string"
-          },
-          "ModifiedBy": {
-            "type": "number",
-            "format": "double"
-          },
-          "Title": {
-            "type": "string"
-          },
-          "Year": {
-            "type": "number",
-            "format": "double"
           }
         },
-        "required": [
-          "BookId",
-          "CreatedAtUtc",
-          "CreatedBy",
-          "Description",
-          "DownloadURL",
-          "ImageURL",
-          "ISBN",
-          "LanguageID",
-          "ModifiedAtUtc",
-          "ModifiedBy",
-          "Title",
-          "Year"
-        ],
+        "required": ["AuthorId", "BookId"],
         "type": "object",
         "additionalProperties": false
       },
-      "Partial_Book_": {
+      "BookRequest": {
         "properties": {
-          "BookId": {
+          "bookId": {
             "type": "number",
             "format": "double"
           },
-          "CreatedAtUtc": {
+          "createdAtUtc": {
             "type": "string"
           },
-          "CreatedBy": {
+          "createdBy": {
             "type": "number",
             "format": "double"
           },
-          "Description": {
+          "description": {
             "type": "string"
           },
-          "DownloadURL": {
+          "downloadUrl": {
             "type": "string"
           },
-          "ImageURL": {
+          "imageUrl": {
             "type": "string"
           },
-          "ISBN": {
+          "isbn": {
+            "type": "string"
+          },
+          "languageId": {
             "type": "number",
             "format": "double"
           },
-          "LanguageID": {
+          "modifiedAtUtc": {
+            "type": "string"
+          },
+          "modifiedBy": {
             "type": "number",
             "format": "double"
           },
-          "ModifiedAtUtc": {
+          "title": {
             "type": "string"
           },
-          "ModifiedBy": {
-            "type": "number",
-            "format": "double"
-          },
-          "Title": {
-            "type": "string"
-          },
-          "Year": {
+          "year": {
             "type": "number",
             "format": "double"
           }
         },
+        "required": ["bookId", "createdAtUtc", "createdBy", "description", "isbn", "languageId", "modifiedAtUtc", "modifiedBy", "title", "year"],
         "type": "object",
-        "description": "Make all properties in T optional"
+        "additionalProperties": false
       },
-      "Author": {
+      "BookUpdateRequest": {
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "downloadUrl": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "isbn": {
+            "type": "string"
+          },
+          "languageId": {
+            "type": "number",
+            "format": "double"
+          },
+          "title": {
+            "type": "string"
+          },
+          "year": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": ["description", "isbn", "languageId", "title", "year"],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "AuthorCreateRequest": {
+        "properties": {
+          "middlename": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "surname": {
+            "type": "string"
+          }
+        },
+        "required": ["name"],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "AuthorRequest": {
         "properties": {
           "AuthorId": {
             "type": "number",
@@ -187,28 +241,25 @@
             "type": "string"
           }
         },
-        "required": ["AuthorId", "Middlename", "Name", "Surname"],
+        "required": ["AuthorId", "Name"],
         "type": "object",
         "additionalProperties": false
       },
-      "Partial_Author_": {
+      "AuthorUpdateRequest": {
         "properties": {
-          "AuthorId": {
-            "type": "number",
-            "format": "double"
-          },
-          "Middlename": {
+          "middlename": {
             "type": "string"
           },
-          "Name": {
+          "name": {
             "type": "string"
           },
-          "Surname": {
+          "surname": {
             "type": "string"
           }
         },
+        "required": ["name"],
         "type": "object",
-        "description": "Make all properties in T optional"
+        "additionalProperties": false
       }
     },
     "securitySchemes": {}
@@ -233,7 +284,16 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "properties": {
+                    "user": {
+                      "$ref": "#/components/schemas/UserRequest"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["message"],
+                  "type": "object"
                 }
               }
             }
@@ -248,7 +308,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/UserCreateRequest"
               }
             }
           }
@@ -263,7 +323,7 @@
               "application/json": {
                 "schema": {
                   "items": {
-                    "$ref": "#/components/schemas/User"
+                    "$ref": "#/components/schemas/UserRequest"
                   },
                   "type": "array"
                 }
@@ -271,7 +331,6 @@
             }
           }
         },
-        "description": "GET /users",
         "tags": ["Users"],
         "security": [],
         "parameters": []
@@ -321,7 +380,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/UserRequest"
+                    }
+                  ],
+                  "nullable": true
                 }
               }
             }
@@ -350,7 +414,16 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "properties": {
+                    "user": {
+                      "$ref": "#/components/schemas/UserRequest"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["message"],
+                  "type": "object"
                 }
               }
             }
@@ -375,7 +448,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Partial_User_"
+                "$ref": "#/components/schemas/UserUpdateRequest"
               }
             }
           }
@@ -391,7 +464,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Language"
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["message"],
+                  "type": "object"
                 }
               }
             }
@@ -406,7 +485,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Language"
+                "$ref": "#/components/schemas/CreateLanguageRequest"
               }
             }
           }
@@ -421,7 +500,7 @@
               "application/json": {
                 "schema": {
                   "items": {
-                    "$ref": "#/components/schemas/Language"
+                    "$ref": "#/components/schemas/LanguageRequest"
                   },
                   "type": "array"
                 }
@@ -479,7 +558,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Language"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/LanguageRequest"
+                    }
+                  ],
+                  "nullable": true
                 }
               }
             }
@@ -508,7 +592,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Language"
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["message"],
+                  "type": "object"
                 }
               }
             }
@@ -533,11 +623,90 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Partial_Language_"
+                "$ref": "#/components/schemas/UpdateLanguageRequest"
               }
             }
           }
         }
+      }
+    },
+    "/books/{bookId}/authors": {
+      "post": {
+        "operationId": "AddAuthorToBook",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["message"],
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "description": "POST /books/{bookId}/authors",
+        "tags": ["Books"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bookId",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookAuthorCreateRequest"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "GetAuthorsByBook",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/BookAuthor"
+                  },
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "GET /books/{bookId}/authors",
+        "tags": ["Books"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bookId",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
       }
     },
     "/books": {
@@ -549,7 +718,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Book"
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "number",
+                      "format": "double"
+                    }
+                  },
+                  "required": ["message", "id"],
+                  "type": "object"
                 }
               }
             }
@@ -564,7 +743,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Book"
+                "$ref": "#/components/schemas/BookCreateRequest"
               }
             }
           }
@@ -579,7 +758,7 @@
               "application/json": {
                 "schema": {
                   "items": {
-                    "$ref": "#/components/schemas/Book"
+                    "$ref": "#/components/schemas/BookRequest"
                   },
                   "type": "array"
                 }
@@ -587,6 +766,7 @@
             }
           }
         },
+        "description": "GET /books",
         "tags": ["Books"],
         "security": [],
         "parameters": []
@@ -636,7 +816,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Book"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/BookRequest"
+                    }
+                  ],
+                  "nullable": true
                 }
               }
             }
@@ -665,7 +850,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Book"
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "number",
+                      "format": "double"
+                    }
+                  },
+                  "required": ["message", "id"],
+                  "type": "object"
                 }
               }
             }
@@ -690,11 +885,57 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Partial_Book_"
+                "$ref": "#/components/schemas/BookUpdateRequest"
               }
             }
           }
         }
+      }
+    },
+    "/books/{bookId}/authors/{authorId}": {
+      "delete": {
+        "operationId": "RemoveAuthorFromBook",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["message"],
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "description": "DELETE /books/{bookId}/authors/{authorId}",
+        "tags": ["Books"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bookId",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          },
+          {
+            "in": "path",
+            "name": "authorId",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
       }
     },
     "/authors": {
@@ -706,7 +947,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Author"
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "number",
+                      "format": "double"
+                    }
+                  },
+                  "required": ["message", "id"],
+                  "type": "object"
                 }
               }
             }
@@ -721,7 +972,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Author"
+                "$ref": "#/components/schemas/AuthorCreateRequest"
               }
             }
           }
@@ -736,7 +987,7 @@
               "application/json": {
                 "schema": {
                   "items": {
-                    "$ref": "#/components/schemas/Author"
+                    "$ref": "#/components/schemas/AuthorRequest"
                   },
                   "type": "array"
                 }
@@ -762,9 +1013,13 @@
                   "properties": {
                     "message": {
                       "type": "string"
+                    },
+                    "id": {
+                      "type": "number",
+                      "format": "double"
                     }
                   },
-                  "required": ["message"],
+                  "required": ["message", "id"],
                   "type": "object"
                 }
               }
@@ -794,13 +1049,18 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Author"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/AuthorRequest"
+                    }
+                  ],
+                  "nullable": true
                 }
               }
             }
           }
         },
-        "description": "GET /authors/{id}",
+        "description": "GET /Authors/{id}",
         "tags": ["Authors"],
         "security": [],
         "parameters": [
@@ -823,13 +1083,23 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Author"
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "number",
+                      "format": "double"
+                    }
+                  },
+                  "required": ["message", "id"],
+                  "type": "object"
                 }
               }
             }
           }
         },
-        "description": "PUT /authors/{id}",
+        "description": "PUT /Authors/{id}",
         "tags": ["Authors"],
         "security": [],
         "parameters": [
@@ -848,11 +1118,45 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Partial_Author_"
+                "$ref": "#/components/schemas/AuthorUpdateRequest"
               }
             }
           }
         }
+      }
+    },
+    "/authors/{authorId}/books": {
+      "get": {
+        "operationId": "GetBooksByAuthor",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/BookAuthor"
+                  },
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "GET /authors/{authorId}/books",
+        "tags": ["Authors"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "authorId",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
       }
     }
   },
