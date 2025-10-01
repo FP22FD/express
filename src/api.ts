@@ -1,3 +1,4 @@
+import cors from "cors";
 import dotenv from "dotenv";
 import express, { Request, Response, Router } from "express";
 import serverless from "serverless-http";
@@ -9,6 +10,9 @@ export const router = Router();
 
 // Middleware to accept JSON
 app.use(express.json());
+
+// Middleware CORS: before routes
+app.use((cors as (options: cors.CorsOptions) => express.RequestHandler)({}));
 
 app.use("/api", router);
 
