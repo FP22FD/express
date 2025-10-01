@@ -51,14 +51,21 @@ Prototype and project architecture, showing the complete flow from the database 
 - **C#, Razor Pages, MVC, EF Core, WebAPI C#** → .NET part (for study or comparison with Node).
 - **HTTP, OAPI (OpenAPI)** → protocols and standards for APIs.
 
----
+### 9. How to View Swagger Documentation
 
-✅ In summary:
+To see the API documentation locally:
 
-1. Create an **SQL database in Azure**.
-2. Develop an **API with Express** connected to the database.
-3. Implement **auth + cookie + hashing**.
-4. Document with **Swagger**.
-5. Host the frontend on **Netlify** that consumes the API.
-6. Implement file upload to **Azure Storage**.
-7. (Optional) Study a similar version in **C# with Razor/EF Core**.
+1. Open a terminal in the project folder.
+2. Generated the TSOA spec and routes by running `tsoa-all`.
+3. Start the development server.
+4. Open your browser and follow the link for Swagger docs.
+
+```bash
+npm run tsoa-all
+npm run dev
+```
+
+## Resource
+
+- Swagger: [Manual setup guide](https://dev.to/cuongnp/swagger-nodejs-express-a-step-by-step-guide-4ob)
+- Swagger: [Automatic setup guide](https://dev.to/tomekbuszewski/how-to-add-openapi-to-your-express-app-24k4)
