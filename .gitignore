@@ -19,6 +19,3 @@ coverage/
 
 # Logs
 exercises.sql
-
-# Old / unused routes folder
-_routes/
