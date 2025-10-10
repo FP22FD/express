@@ -8,16 +8,34 @@ dotenv.config();
 export const app = express();
 export const router = Router();
 
-// Middleware to accept JSON
+// 1. Middleware CORS: before all
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:5173", // or 5175
+  })
+);
+
+// 2. Middleware to accept JSON
 app.use(express.json());
 
-// Middleware CORS: before routes
-app.use((cors as (options: cors.CorsOptions) => express.RequestHandler)({}));
-
+// 3. Mount the router on /api
 app.use("/api", router);
 
-// -----------------Utilities for controllers---------------------
+router.get("/", (_req, res) => {
+  res.send(`Hello from Express + TypeScript! + ${process.env.TEST ?? ""}`);
+});
 
+router.get("/hello", (_req, res) => {
+  res.send("Hello World!");
+});
+
+// Test this endpoint at http://localhost:3000/api/books to check json response
+router.get("/books", (_req: Request, res: Response) => {
+  res.json([]);
+});
+
+// 4. Error handling middleware
 export function errorHandler(err: Error, req: Request, res: Response, next: express.NextFunction) {
   if (res.headersSent) {
     next(err);
@@ -27,14 +45,6 @@ export function errorHandler(err: Error, req: Request, res: Response, next: expr
   const msg = err.message || "Internal Server Error";
   res.json(msg);
 }
-
-export function wrapAsync(fn: (req: Request, res: Response, next: express.NextFunction) => Promise<void>) {
-  return function (req: Request, res: Response, next: express.NextFunction) {
-    fn(req, res, next).catch(next);
-  };
-}
-
-// -------------------Local development server---------------------
 
 if (process.env.ENV === "local") {
   const PORT = process.env.PORT ?? "3000";
@@ -46,16 +56,10 @@ if (process.env.ENV === "local") {
 
 app.use(errorHandler);
 
-// ---------------------Serverless export-------------------------
-
 export const handler = serverless(app);
 
-//---------------------Test endpoint and mount event---------------
-
-router.get("/", (_req, res) => {
-  res.send(`Hello from Express + TypeScript! + ${process.env.TEST ?? ""}`);
-});
-
-router.get("/hello", (_req, res) => {
-  res.send("Hello World!");
-});
+// export function wrapAsync(fn: (req: Request, res: Response, next: express.NextFunction) => Promise<void>) {
+//   return function (req: Request, res: Response, next: express.NextFunction) {
+//     fn(req, res, next).catch(next);
+//   };
+// }

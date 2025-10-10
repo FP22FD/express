@@ -1,3 +1,4 @@
+import cors from "cors";
 import express, { Request as ExRequest, Response as ExResponse } from "express";
 import swaggerUi from "swagger-ui-express";
 
@@ -6,6 +7,14 @@ import swaggerDocument from "./tsoa-routes/swagger.json" with { type: "json" }; 
 
 const app = express();
 const port = process.env.PORT ?? "3000";
+
+// ✅ Authorize cross-origin requests for Vite dev server frontend
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:5173", // Vite default port
+  })
+);
 
 app.use(express.json());
 
