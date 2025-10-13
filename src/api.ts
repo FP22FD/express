@@ -1,6 +1,7 @@
+import camelcaseKeys, { ObjectLike } from "camelcase-keys";
 import cors from "cors";
 import dotenv from "dotenv";
-import express, { Request, Response, Router } from "express";
+import express, { NextFunction, Request, Response, Router } from "express";
 import serverless from "serverless-http";
 
 dotenv.config();
@@ -19,7 +20,20 @@ app.use(
 // 2. Middleware to accept JSON
 app.use(express.json());
 
-// 3. Mount the router on /api
+// 4. Middleware: convert backend response to camelCase (res.json)
+const camelcaseResponse = (_req: Request, res: Response, next: NextFunction) => {
+  const oldJson = res.json;
+
+  res.json = function (data: ObjectLike | ObjectLike[]) {
+    const camelData = camelcaseKeys(data, { deep: true });
+    return oldJson.call(this, camelData);
+  };
+
+  next();
+};
+app.use(camelcaseResponse);
+
+// 5. Mount the router on /api
 app.use("/api", router);
 
 router.get("/", (_req, res) => {
@@ -35,7 +49,7 @@ router.get("/books", (_req: Request, res: Response) => {
   res.json([]);
 });
 
-// 4. Error handling middleware
+// 6. Error handling middleware
 export function errorHandler(err: Error, req: Request, res: Response, next: express.NextFunction) {
   if (res.headersSent) {
     next(err);
@@ -57,9 +71,3 @@ if (process.env.ENV === "local") {
 app.use(errorHandler);
 
 export const handler = serverless(app);
-
-// export function wrapAsync(fn: (req: Request, res: Response, next: express.NextFunction) => Promise<void>) {
-//   return function (req: Request, res: Response, next: express.NextFunction) {
-//     fn(req, res, next).catch(next);
-//   };
-// }
