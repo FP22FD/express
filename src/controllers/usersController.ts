@@ -1,8 +1,9 @@
+import camelcaseKeys from "camelcase-keys";
 import dotenv from "dotenv";
 import sql from "mssql";
 import { Body, Controller, Delete, Get, Path, Post, Put, Route, SuccessResponse, Tags } from "tsoa";
 
-import { UserCreateRequest, UserRequest, UserUpdateRequest } from "./../models/user.js";
+import { UserCreateRequest, UserResponse, UserUpdateRequest } from "./../models/user.js";
 
 dotenv.config();
 
@@ -28,7 +29,7 @@ export class UsersController extends Controller {
   /** POST /users */
   @Post()
   @SuccessResponse("201", "Created")
-  public async createUser(@Body() body: UserCreateRequest): Promise<{ message: string; user?: UserRequest }> {
+  public async createUser(@Body() body: UserCreateRequest): Promise<{ message: string }> {
     const { username } = body;
 
     if (!username || username.length < 3) {
@@ -38,9 +39,9 @@ export class UsersController extends Controller {
 
     const pool = await sql.connect(sqlConfig);
 
-    const result = await pool.request().input("username", sql.VarChar(100), username).query("INSERT INTO Users (Username) VALUES (@username)");
+    await pool.request().input("username", sql.VarChar(100), username).query("INSERT INTO Users (Username) VALUES (@username)");
 
-    return { message: "User created successfully", user: result.recordset[0] as UserRequest };
+    return { message: "User created successfully" };
   }
 
   /** DELETE /users/{id} */
@@ -68,7 +69,7 @@ export class UsersController extends Controller {
 
   /** GET /users/{id} */
   @Get("{id}")
-  public async getUser(@Path() id: number): Promise<null | UserRequest> {
+  public async getUser(@Path() id: number): Promise<null | UserResponse> {
     const pool = await sql.connect(sqlConfig);
     const result = await pool.request().input("id", sql.Int, id).query("SELECT * FROM Users WHERE UserId = @id");
 
@@ -77,19 +78,23 @@ export class UsersController extends Controller {
       return null;
     }
 
-    return result.recordset[0] as UserRequest;
+    // return result.recordset[0] as UserRequest;
+
+    return camelcaseKeys(result.recordset[0], { deep: true }) as UserResponse;
   }
 
   @Get()
-  public async getUsers(): Promise<UserRequest[]> {
+  public async getUsers(): Promise<UserResponse[]> {
     const pool = await sql.connect(sqlConfig);
     const result = await pool.request().query("SELECT * FROM Users");
-    return result.recordset as UserRequest[];
+    // return result.recordset as UserRequest[];
+
+    return camelcaseKeys(result.recordset, { deep: true }) as unknown as UserResponse[];
   }
 
   /** PUT /users/{id} */
   @Put("{id}")
-  public async updateUser(@Path() id: number, @Body() body: UserUpdateRequest): Promise<{ message: string; user?: UserRequest }> {
+  public async updateUser(@Path() id: number, @Body() body: UserUpdateRequest): Promise<{ message: string; user?: UserResponse }> {
     const { username } = body;
 
     if (!username || username.length < 3) {
@@ -112,7 +117,7 @@ export class UsersController extends Controller {
 
     return {
       message: "User updated successfully",
-      user: result.recordset[0] as UserRequest,
+      user: result.recordset[0] as UserResponse,
     };
   }
 }

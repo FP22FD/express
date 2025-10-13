@@ -2,7 +2,7 @@ export interface UserCreateRequest {
   username: string;
 }
 
-export interface UserRequest {
+export interface UserResponse {
   userId: number;
   username: string;
 }

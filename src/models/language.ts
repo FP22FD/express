@@ -1,7 +1,7 @@
 export interface CreateLanguageRequest {
   languageCode: string;
 }
-export interface LanguageRequest {
+export interface LanguageResponse {
   languageCode: string;
   languageId: number;
 }

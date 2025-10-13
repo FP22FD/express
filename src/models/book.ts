@@ -1,10 +1,10 @@
-export interface BookAuthor {
-  AuthorId: number;
-  BookId: number;
-}
-
 export interface BookAuthorCreateRequest {
   authorId: number;
+}
+
+export interface BookAuthorResponse {
+  authorId: number;
+  bookId: number;
 }
 
 export interface BookCreateRequest {
@@ -17,7 +17,7 @@ export interface BookCreateRequest {
   year: number;
 }
 
-export interface BookRequest {
+export interface BookResponse {
   bookId: number;
   createdAtUtc: string;
   createdBy: number;

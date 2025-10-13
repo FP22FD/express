@@ -4,11 +4,11 @@ export interface AuthorCreateRequest {
   surname?: string;
 }
 
-export interface AuthorRequest {
-  AuthorId: number;
-  Middlename?: string;
-  Name: string;
-  Surname?: string;
+export interface AuthorResponse {
+  authorId: number;
+  middlename?: string;
+  name: string;
+  surname?: string;
 }
 
 export interface AuthorUpdateRequest {

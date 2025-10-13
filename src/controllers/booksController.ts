@@ -1,8 +1,9 @@
+import camelcaseKeys from "camelcase-keys";
 import dotenv from "dotenv";
 import sql from "mssql";
 import { Body, Controller, Delete, Get, Path, Post, Put, Route, SuccessResponse, Tags } from "tsoa";
 
-import { BookAuthor, BookAuthorCreateRequest, BookCreateRequest, BookRequest, BookUpdateRequest } from "./../models/book.js";
+import { BookAuthorCreateRequest, BookAuthorResponse, BookCreateRequest, BookResponse, BookUpdateRequest } from "./../models/book.js";
 
 dotenv.config();
 
@@ -81,10 +82,10 @@ export class BooksController extends Controller {
       .input("title", sql.NVarChar(200), title)
       .input("year", sql.Int, year).query<{ BookId: number }>(`
         INSERT INTO Books
-          (CreatedBy, Description, DownloadUrl, ImageUrl, ISBN, LanguageId, Title, Year)
+          (Description, DownloadUrl, ImageUrl, ISBN, LanguageId, Title, Year)
         OUTPUT INSERTED.BookId
         VALUES
-          (@createdBy, @description, @downloadUrl, @imageUrl, @isbn, @languageId, @title, @year)
+          ( @description, @downloadUrl, @imageUrl, @isbn, @languageId, @title, @year)
       `);
 
     return { id: result.recordset[0].BookId, message: "Book created successfully" };
@@ -110,15 +111,16 @@ export class BooksController extends Controller {
 
   /** GET /books/{bookId}/authors */
   @Get("{bookId}/authors")
-  public async getAuthorsByBook(@Path() bookId: number): Promise<BookAuthor[]> {
+  public async getAuthorsByBook(@Path() bookId: number): Promise<BookAuthorResponse[]> {
     const pool = await sql.connect(sqlConfig);
     const result = await pool.request().input("bookId", sql.Int, bookId).query("SELECT * FROM BooksAuthors WHERE BookId = @bookId");
-    return result.recordset as BookAuthor[];
+    // return result.recordset as BookAuthor[];
+    return camelcaseKeys(result.recordset, { deep: true }) as unknown as BookAuthorResponse[];
   }
 
   /** GET /books/{id} */
   @Get("{id}")
-  public async getBook(@Path() id: number): Promise<BookRequest | null> {
+  public async getBook(@Path() id: number): Promise<BookResponse | null> {
     const pool = await sql.connect(sqlConfig);
     const result = await pool.request().input("id", sql.Int, id).query("SELECT * FROM Books WHERE BookId = @id");
 
@@ -127,15 +129,17 @@ export class BooksController extends Controller {
       return null;
     }
 
-    return result.recordset[0] as BookRequest;
+    // return result.recordset[0] as BookRequest;
+    return camelcaseKeys(result.recordset[0], { deep: true }) as BookResponse;
   }
 
   /** GET /books */ // -- books
   @Get()
-  public async getBooks(): Promise<BookRequest[]> {
+  public async getBooks(): Promise<BookResponse[]> {
     const pool = await sql.connect(sqlConfig);
     const result = await pool.request().query("SELECT * FROM Books");
-    return result.recordset;
+    // return result.recordset;
+    return camelcaseKeys(result.recordset, { deep: true }) as unknown as BookResponse[];
   }
 
   /** DELETE /books/{bookId}/authors/{authorId} */

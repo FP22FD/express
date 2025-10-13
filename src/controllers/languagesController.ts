@@ -1,8 +1,9 @@
+import camelcaseKeys from "camelcase-keys";
 import dotenv from "dotenv";
 import sql from "mssql";
 import { Body, Controller, Delete, Get, Path, Post, Put, Route, SuccessResponse, Tags } from "tsoa";
 
-import { CreateLanguageRequest, LanguageRequest, UpdateLanguageRequest } from "./../models/language.js";
+import { CreateLanguageRequest, LanguageResponse, UpdateLanguageRequest } from "./../models/language.js";
 
 dotenv.config();
 
@@ -63,7 +64,7 @@ export class LanguagesController extends Controller {
 
   /** GET /languages/{id} */
   @Get("{id}")
-  public async getLanguage(@Path() id: number): Promise<LanguageRequest | null> {
+  public async getLanguage(@Path() id: number): Promise<LanguageResponse | null> {
     const pool = await sql.connect(sqlConfig);
     const result = await pool.request().input("id", sql.Int, id).query("SELECT * FROM Languages WHERE LanguageId = @id");
 
@@ -72,15 +73,17 @@ export class LanguagesController extends Controller {
       return null;
     }
 
-    return result.recordset[0] as LanguageRequest;
+    // return result.recordset[0] as LanguageRequest;
+    return camelcaseKeys(result.recordset[0], { deep: true }) as unknown as LanguageResponse;
   }
 
   /** GET /languages */
   @Get()
-  public async getLanguages(): Promise<LanguageRequest[]> {
+  public async getLanguages(): Promise<LanguageResponse[]> {
     const pool = await sql.connect(sqlConfig);
     const result = await pool.request().query("SELECT * FROM Languages");
-    return result.recordset as LanguageRequest[];
+    // return result.recordset as LanguageRequest[];
+    return camelcaseKeys(result.recordset, { deep: true }) as unknown as LanguageResponse[];
   }
 
   /** PUT /languages/{id} */
