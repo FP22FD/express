@@ -1,5 +1,5 @@
 {
-  "entryFile": "src/api.ts",
+  "entryFile": "index.ts",
   "noImplicitAdditionalProperties": "throw-on-extras",
   "controllerPathGlobs": ["src/controllers/**/*Controller.ts"],
   "spec": {
@@ -9,6 +9,7 @@
   },
   "routes": {
     "routesDir": "tsoa-routes",
-    "basePath": "/api"
+    "basePath": "/api",
+    "useESModules": true
   }
 }
