@@ -7,7 +7,17 @@
     "requestBodies": {},
     "responses": {},
     "schemas": {
-      "UserRequest": {
+      "UserCreateRequest": {
+        "properties": {
+          "username": {
+            "type": "string"
+          }
+        },
+        "required": ["username"],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "UserResponse": {
         "properties": {
           "userId": {
             "type": "number",
@@ -18,16 +28,6 @@
           }
         },
         "required": ["userId", "username"],
-        "type": "object",
-        "additionalProperties": false
-      },
-      "UserCreateRequest": {
-        "properties": {
-          "username": {
-            "type": "string"
-          }
-        },
-        "required": ["username"],
         "type": "object",
         "additionalProperties": false
       },
@@ -51,7 +51,7 @@
         "type": "object",
         "additionalProperties": false
       },
-      "LanguageRequest": {
+      "LanguageResponse": {
         "properties": {
           "languageCode": {
             "type": "string"
@@ -116,22 +116,22 @@
         "type": "object",
         "additionalProperties": false
       },
-      "BookAuthor": {
+      "BookAuthorResponse": {
         "properties": {
-          "AuthorId": {
+          "authorId": {
             "type": "number",
             "format": "double"
           },
-          "BookId": {
+          "bookId": {
             "type": "number",
             "format": "double"
           }
         },
-        "required": ["AuthorId", "BookId"],
+        "required": ["authorId", "bookId"],
         "type": "object",
         "additionalProperties": false
       },
-      "BookRequest": {
+      "BookResponse": {
         "properties": {
           "bookId": {
             "type": "number",
@@ -225,23 +225,23 @@
         "type": "object",
         "additionalProperties": false
       },
-      "AuthorRequest": {
+      "AuthorResponse": {
         "properties": {
-          "AuthorId": {
+          "authorId": {
             "type": "number",
             "format": "double"
           },
-          "Middlename": {
+          "middlename": {
             "type": "string"
           },
-          "Name": {
+          "name": {
             "type": "string"
           },
-          "Surname": {
+          "surname": {
             "type": "string"
           }
         },
-        "required": ["AuthorId", "Name"],
+        "required": ["authorId", "name"],
         "type": "object",
         "additionalProperties": false
       },
@@ -285,9 +285,6 @@
               "application/json": {
                 "schema": {
                   "properties": {
-                    "user": {
-                      "$ref": "#/components/schemas/UserRequest"
-                    },
                     "message": {
                       "type": "string"
                     }
@@ -323,7 +320,7 @@
               "application/json": {
                 "schema": {
                   "items": {
-                    "$ref": "#/components/schemas/UserRequest"
+                    "$ref": "#/components/schemas/UserResponse"
                   },
                   "type": "array"
                 }
@@ -382,7 +379,7 @@
                 "schema": {
                   "allOf": [
                     {
-                      "$ref": "#/components/schemas/UserRequest"
+                      "$ref": "#/components/schemas/UserResponse"
                     }
                   ],
                   "nullable": true
@@ -416,7 +413,7 @@
                 "schema": {
                   "properties": {
                     "user": {
-                      "$ref": "#/components/schemas/UserRequest"
+                      "$ref": "#/components/schemas/UserResponse"
                     },
                     "message": {
                       "type": "string"
@@ -500,7 +497,7 @@
               "application/json": {
                 "schema": {
                   "items": {
-                    "$ref": "#/components/schemas/LanguageRequest"
+                    "$ref": "#/components/schemas/LanguageResponse"
                   },
                   "type": "array"
                 }
@@ -560,7 +557,7 @@
                 "schema": {
                   "allOf": [
                     {
-                      "$ref": "#/components/schemas/LanguageRequest"
+                      "$ref": "#/components/schemas/LanguageResponse"
                     }
                   ],
                   "nullable": true
@@ -685,7 +682,7 @@
               "application/json": {
                 "schema": {
                   "items": {
-                    "$ref": "#/components/schemas/BookAuthor"
+                    "$ref": "#/components/schemas/BookAuthorResponse"
                   },
                   "type": "array"
                 }
@@ -707,6 +704,59 @@
             }
           }
         ]
+      }
+    },
+    "/books/{bookId}/upload": {
+      "post": {
+        "operationId": "AddImageToBook",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["message"],
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Books"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bookId",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": ["file"]
+              }
+            }
+          }
+        }
       }
     },
     "/books": {
@@ -758,7 +808,7 @@
               "application/json": {
                 "schema": {
                   "items": {
-                    "$ref": "#/components/schemas/BookRequest"
+                    "$ref": "#/components/schemas/BookResponse"
                   },
                   "type": "array"
                 }
@@ -818,7 +868,7 @@
                 "schema": {
                   "allOf": [
                     {
-                      "$ref": "#/components/schemas/BookRequest"
+                      "$ref": "#/components/schemas/BookResponse"
                     }
                   ],
                   "nullable": true
@@ -987,7 +1037,7 @@
               "application/json": {
                 "schema": {
                   "items": {
-                    "$ref": "#/components/schemas/AuthorRequest"
+                    "$ref": "#/components/schemas/AuthorResponse"
                   },
                   "type": "array"
                 }
@@ -1051,7 +1101,7 @@
                 "schema": {
                   "allOf": [
                     {
-                      "$ref": "#/components/schemas/AuthorRequest"
+                      "$ref": "#/components/schemas/AuthorResponse"
                     }
                   ],
                   "nullable": true
@@ -1135,7 +1185,7 @@
               "application/json": {
                 "schema": {
                   "items": {
-                    "$ref": "#/components/schemas/BookAuthor"
+                    "$ref": "#/components/schemas/BookAuthorResponse"
                   },
                   "type": "array"
                 }

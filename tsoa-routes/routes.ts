@@ -3,30 +3,31 @@
 import type { TsoaRoute } from "@tsoa/runtime";
 import { fetchMiddlewares, ExpressTemplateService } from "@tsoa/runtime";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { UsersController } from "./../src/controllers/usersController";
+import { UsersController } from "./../src/controllers/usersController.js";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { LanguagesController } from "./../src/controllers/languagesController";
+import { LanguagesController } from "./../src/controllers/languagesController.js";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { BooksController } from "./../src/controllers/booksController";
+import { BooksController } from "./../src/controllers/booksController.js";
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { AuthorsController } from "./../src/controllers/authorsController";
+import { AuthorsController } from "./../src/controllers/authorsController.js";
 import type { Request as ExRequest, Response as ExResponse, RequestHandler, Router } from "express";
+import multer from "multer";
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
-  UserRequest: {
+  UserCreateRequest: {
     dataType: "refObject",
     properties: {
-      userId: { dataType: "double", required: true },
       username: { dataType: "string", required: true },
     },
     additionalProperties: false,
   },
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  UserCreateRequest: {
+  UserResponse: {
     dataType: "refObject",
     properties: {
+      userId: { dataType: "double", required: true },
       username: { dataType: "string", required: true },
     },
     additionalProperties: false,
@@ -48,7 +49,7 @@ const models: TsoaRoute.Models = {
     additionalProperties: false,
   },
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  LanguageRequest: {
+  LanguageResponse: {
     dataType: "refObject",
     properties: {
       languageCode: { dataType: "string", required: true },
@@ -87,16 +88,16 @@ const models: TsoaRoute.Models = {
     additionalProperties: false,
   },
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  BookAuthor: {
+  BookAuthorResponse: {
     dataType: "refObject",
     properties: {
-      AuthorId: { dataType: "double", required: true },
-      BookId: { dataType: "double", required: true },
+      authorId: { dataType: "double", required: true },
+      bookId: { dataType: "double", required: true },
     },
     additionalProperties: false,
   },
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  BookRequest: {
+  BookResponse: {
     dataType: "refObject",
     properties: {
       bookId: { dataType: "double", required: true },
@@ -139,13 +140,13 @@ const models: TsoaRoute.Models = {
     additionalProperties: false,
   },
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-  AuthorRequest: {
+  AuthorResponse: {
     dataType: "refObject",
     properties: {
-      AuthorId: { dataType: "double", required: true },
-      Middlename: { dataType: "string" },
-      Name: { dataType: "string", required: true },
-      Surname: { dataType: "string" },
+      authorId: { dataType: "double", required: true },
+      middlename: { dataType: "string" },
+      name: { dataType: "string", required: true },
+      surname: { dataType: "string" },
     },
     additionalProperties: false,
   },
@@ -165,11 +166,13 @@ const templateService = new ExpressTemplateService(models, { noImplicitAdditiona
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
-export function RegisterRoutes(app: Router) {
+export function RegisterRoutes(app: Router, opts?: { multer?: ReturnType<typeof multer> }) {
   // ###########################################################################################################
   //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
   //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
   // ###########################################################################################################
+
+  const upload = opts?.multer || multer({ limits: { fileSize: 8388608 } });
 
   const argsUsersController_createUser: Record<string, TsoaRoute.ParameterSchema> = {
     body: { in: "body", name: "body", required: true, ref: "UserCreateRequest" },
@@ -499,6 +502,44 @@ export function RegisterRoutes(app: Router) {
 
         await templateService.apiHandler({
           methodName: "addAuthorToBook",
+          controller,
+          response,
+          next,
+          validatedArgs,
+          successStatus: 201,
+        });
+      } catch (err) {
+        return next(err);
+      }
+    }
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  const argsBooksController_addImageToBook: Record<string, TsoaRoute.ParameterSchema> = {
+    bookId: { in: "path", name: "bookId", required: true, dataType: "double" },
+    file: { in: "formData", name: "file", required: true, dataType: "file" },
+  };
+  app.post(
+    "/api/books/:bookId/upload",
+    upload.fields([
+      {
+        name: "file",
+        maxCount: 1,
+      },
+    ]),
+    ...fetchMiddlewares<RequestHandler>(BooksController),
+    ...fetchMiddlewares<RequestHandler>(BooksController.prototype.addImageToBook),
+
+    async function BooksController_addImageToBook(request: ExRequest, response: ExResponse, next: any) {
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = templateService.getValidatedArgs({ args: argsBooksController_addImageToBook, request, response });
+
+        const controller = new BooksController();
+
+        await templateService.apiHandler({
+          methodName: "addImageToBook",
           controller,
           response,
           next,

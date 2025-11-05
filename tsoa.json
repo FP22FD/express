@@ -10,6 +10,7 @@
   "routes": {
     "routesDir": "tsoa-routes",
     "basePath": "/api",
-    "useESModules": true
+    "esm": true,
+    "middleware": "express"
   }
 }
