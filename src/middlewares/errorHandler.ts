@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 
+//Global middleware that catches errors and sends a 500 response
 export function errorHandler(err: Error, _req: Request, res: Response, next: express.NextFunction) {
   if (res.headersSent) {
     next(err);
