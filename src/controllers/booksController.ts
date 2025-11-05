@@ -1,8 +1,9 @@
 import camelcaseKeys from "camelcase-keys";
 import dotenv from "dotenv";
 import sql from "mssql";
-import { Body, Controller, Delete, Get, Path, Post, Put, Route, SuccessResponse, Tags } from "tsoa";
+import { Body, Controller, Delete, Get, Path, Post, Put, Route, SuccessResponse, Tags, UploadedFile } from "tsoa";
 
+import { getSignedDownloadUrl, uploadBufferToAzure } from "../services/azureBlobService.js";
 import { BookAuthorCreateRequest, BookAuthorResponse, BookCreateRequest, BookResponse, BookUpdateRequest } from "./../models/book.js";
 
 dotenv.config();
@@ -59,7 +60,35 @@ export class BooksController extends Controller {
     return { message: "Author added to book successfully" };
   }
 
-  /** POST /books */ // -- books
+  // router.post("/books/:bookId/upload", uploadSingle, asyncHandler(uploadController));
+  @Post("{bookId}/upload")
+  @SuccessResponse("201", "Created")
+  public async addImageToBook(@Path() bookId: number, @UploadedFile() file: Express.Multer.File): Promise<undefined | { message: string }> {
+    try {
+      if (!bookId) {
+        this.setStatus(400);
+        return { message: "Missing bookId" };
+      }
+
+      const { blobName } = await uploadBufferToAzure(file.buffer, file.originalname, file.mimetype);
+
+      const pool = await sql.connect(sqlConfig);
+
+      await pool.request().input("bookId", sql.Int, bookId).input("imageUrl", sql.NVarChar(500), blobName).query(`
+            UPDATE Books
+            SET ImageUrl = @imageUrl
+            WHERE BookId = @bookId;
+          `);
+
+      this.setStatus(200);
+    } catch (err) {
+      console.error("uploadController error:", err);
+      this.setStatus(500);
+      return { message: "Upload failed" };
+    }
+  }
+
+  /** POST /books */
   @Post()
   @SuccessResponse("201", "Created")
   public async createBook(@Body() body: BookCreateRequest): Promise<{ id: number; message: string }> {
@@ -91,7 +120,7 @@ export class BooksController extends Controller {
     return { id: result.recordset[0].BookId, message: "Book created successfully" };
   }
 
-  /** DELETE /books/{id} */ // -- books
+  /** DELETE /books/{id} */
   @Delete("{id}")
   public async deleteBook(@Path() id: number): Promise<{ message: string }> {
     const pool = await sql.connect(sqlConfig);
@@ -114,7 +143,6 @@ export class BooksController extends Controller {
   public async getAuthorsByBook(@Path() bookId: number): Promise<BookAuthorResponse[]> {
     const pool = await sql.connect(sqlConfig);
     const result = await pool.request().input("bookId", sql.Int, bookId).query("SELECT * FROM BooksAuthors WHERE BookId = @bookId");
-    // return result.recordset as BookAuthor[];
     return camelcaseKeys(result.recordset, { deep: true }) as unknown as BookAuthorResponse[];
   }
 
@@ -129,17 +157,25 @@ export class BooksController extends Controller {
       return null;
     }
 
-    // return result.recordset[0] as BookRequest;
-    return camelcaseKeys(result.recordset[0], { deep: true }) as BookResponse;
+    const response = camelcaseKeys(result.recordset[0], { deep: true }) as BookResponse;
+    response.imageUrl = response.imageUrl ? getSignedDownloadUrl(response.imageUrl) : "";
+    return response;
   }
 
-  /** GET /books */ // -- books
+  /** GET /books */
   @Get()
   public async getBooks(): Promise<BookResponse[]> {
     const pool = await sql.connect(sqlConfig);
     const result = await pool.request().query("SELECT * FROM Books");
-    // return result.recordset;
-    return camelcaseKeys(result.recordset, { deep: true }) as unknown as BookResponse[];
+    console.log("Books query result:", result.recordset);
+
+    let response = camelcaseKeys(result.recordset, { deep: true }) as unknown as BookResponse[];
+    response = response.map((book) => {
+      const url = book.imageUrl ? getSignedDownloadUrl(book.imageUrl) : "";
+
+      return { ...book, imageUrl: url };
+    });
+    return response;
   }
 
   /** DELETE /books/{bookId}/authors/{authorId} */
